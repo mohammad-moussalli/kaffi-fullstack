@@ -1,0 +1,13 @@
+var express = require('express');
+var router = express.Router();
+var faq_categories = require("../controllers/faq_categories")
+
+/* GET users listing. */
+router.get('/', faq_categories.getAll);
+router.get('/category_id', faq_categories.getCategory);
+router.post('/add', faq_categories.create);
+///router.get('/:id', faq_categories.getCategoryId)
+router.post('/update', faq_categories.update)
+router.delete('/:id', faq_categories.delete);
+
+module.exports = router;
