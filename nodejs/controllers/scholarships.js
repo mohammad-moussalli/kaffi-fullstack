@@ -7,7 +7,9 @@ module.exports = {
     getScholorship,
     getById,
     update,
-    _delete
+    _delete,
+    createCycle,
+    getScholorshipCycle
 };
 
 function getAll(req, res, next) {
@@ -21,8 +23,18 @@ function create(req, res, next) {
         .then((message) => res.json({message : message}))
         .catch(next);}
 
+function createCycle(req, res, next) {
+    scholorshipServices.createCycle(req.body)
+        .then((message) => res.json({message : message}))
+        .catch(next);}
+
 function getScholorship(req, res, next) {
     scholorshipServices.getScholorship(req.params.id)
+        .then((message) => res.json({message : message}))
+        .catch(next);}
+
+function getScholorshipCycle(req, res, next) {
+    scholorshipServices.getScholorshipCycle(req.body)
         .then((message) => res.json({message : message}))
         .catch(next);}
 
@@ -40,6 +52,6 @@ function update(req, res, next) {
 
 function _delete(req, res, next) {
     scholorshipServices.delete(req.params.id)
-        .then(() => res.json({ message: 'Scholarship deleted successfully' }))
+        .then((message) => res.json({ message: message }))
         .catch(next);
 }

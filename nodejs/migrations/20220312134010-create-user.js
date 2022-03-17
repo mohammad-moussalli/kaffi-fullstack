@@ -29,19 +29,7 @@ module.exports = {
         //   key: 'id'
         // },
         // allowNull: false
-      },
-      location_id: {
-        type: Sequelize.INTEGER,
-        // references: {
-        //   model: {
-        //     tableName: 'locations',
-        //     schema: 'schema'
-        //   },
-        //   key: 'id'
-        // },
-        // allowNull: false
-      },
-      
+      },      
       first_name: {
         type: Sequelize.STRING
       },
@@ -57,13 +45,22 @@ module.exports = {
       dob: {
         type: Sequelize.DATEONLY
       },
+      country_code: {
+        type: Sequelize.STRING
+      },
       mobile_phone: {
         type: Sequelize.STRING
       },
       sex: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
-      verification_document: {
+      country: {
+        type: Sequelize.STRING
+      },
+      city: {
+        type: Sequelize.STRING
+      },
+      nationality: {
         type: Sequelize.STRING
       },
       profile_picture: {

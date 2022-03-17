@@ -1,4 +1,3 @@
-const db = require('../config/database');
 const model = require('../models')
 
 module.exports = {
@@ -7,8 +6,9 @@ module.exports = {
     getScholorship,
     getById,
     update,
-    delete: _delete
-
+    createCycle,
+    getScholorshipCycle,
+    delete: _delete,
 };
 
 async function getAll() {
@@ -18,11 +18,43 @@ async function getAll() {
 async function create(params) {
     // validate
     if (await model.Scholorship.findOne({ where: { name: params.name } })) {
-        return "Name already exists"
+        return "Name already exists";
     }
     // save scholorship
     await model.Scholorship.create({name: params.name});
-    return "Scholoship created successfully"
+    return "Scholorship created successfully";
+}
+
+async function createCycle(params){
+    // validate
+    const scholorship = await model.Scholorship.findOne({ where: { name: params.name } })
+    if (scholorship && await model.Scholorship_Cycle.findOne({ where: { cycle:params.cycle, scholorship_id:scholorship.id, start_date:params.start_date, deadline:params.deadline, results:params.results} })) {
+        return "Scholorship Cycle already exists";
+    }
+    
+    if (!scholorship){
+        return "Scholorship not Found";
+    }
+
+    await model.Scholorship_Cycle.create({  scholorship_id: scholorship.id,
+                                            cycle: params.cycle,
+                                            start_date: params.start_date,
+                                            deadline: params.deadline,
+                                            results: params.results
+                                        })
+    return "Scholorship cycle created succesfully";                                    
+}
+
+async function getScholorshipCycle(params) {
+    const get_scholorship = await model.Scholorship.findOne({ where: { name: params.name } });
+    if(!get_scholorship){
+        return 'Scholorship not found'
+    }
+    const scholorship = await model.Scholorship_Cycle.findOne({where: { cycle: params.cycle, scholorship_id: get_scholorship.id}});
+    if (!scholorship){
+        return 'Scholorship cycle not found';
+    }
+    return scholorship;
 }
 
 async function getScholorship(id) {
@@ -48,18 +80,24 @@ async function update(id, name) {
     }
 
     // update params to scholorship and save but not working directly on postman
-    model.Scholorship.update(
+    await model.Scholorship.update(
         { name: name},	
         { where: { id: id } },	 
       )
     
-    await scholorship.save();
+   // await scholorship.save();
 
-    return scholorship.get();
+    return "Update Successfully";
+      
+    ;
 }
 
 async function _delete(id) {
     const scholorship = await getScholorship(id);
+    if (!scholorship.id){
+        return 'Scholorship is not found';
+    }
     await scholorship.destroy();
+    return 'Scholarship deleted successfully';
 }
 

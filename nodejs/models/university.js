@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   University.init({
     university: DataTypes.STRING,
     major: DataTypes.STRING,
-    university_id: DataTypes.STRING,
-    enrollment_date: DataTypes.DATEONLY,
-    expected_graduation: DataTypes.DATEONLY
+    degree: DataTypes.STRING,
+    university_country: DataTypes.STRING,
+    university_city: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'University',

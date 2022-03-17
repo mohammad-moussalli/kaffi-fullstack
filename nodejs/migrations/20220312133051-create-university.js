@@ -14,14 +14,14 @@ module.exports = {
       major: {
         type: Sequelize.STRING
       },
-      university_id: {
+      degree: {
         type: Sequelize.STRING
       },
-      enrollment_date: {
-        type: Sequelize.DATEONLY
+      university_country: {
+        type: Sequelize.STRING
       },
-      expected_graduation: {
-        type: Sequelize.DATEONLY
+      university_city: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

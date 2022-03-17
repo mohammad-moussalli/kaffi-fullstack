@@ -8,6 +8,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var scholorshipRouter = require('./routes/scholorships');
 var faqRouter = require('./routes/faqs');
+var faqCategoryRouter = require('./routes/faqs_categories');
+var contactUsRouter = require('./routes/contact_us');
+var donorRouter = require('./routes/donors');
+var storyRouter = require('./routes/stories');
+var webinarRouter = require('./routes/webinars');
+var webinarQuestionsRouter = require('./routes/webinars_questions');
 
 var app = express();
 
@@ -25,6 +31,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/scholorships', scholorshipRouter);
 app.use('/faqs', faqRouter);
+app.use('/faq-categories', faqCategoryRouter);
+app.use('/contact-us', contactUsRouter);
+app.use('/donors', donorRouter);
+app.use('/stories', storyRouter);
+app.use('/webinars', webinarRouter);
+app.use('/webinar-questions', webinarQuestionsRouter);
 
 
 // catch 404 and forward to error handler

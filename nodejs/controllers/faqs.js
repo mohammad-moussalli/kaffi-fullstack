@@ -16,29 +16,29 @@ function create(req, res, next) {
 
 function getFaq(req, res, next) {
     faqsServices.getFaq(req.params.id)
-        .then((message) => res.json({message : message}))
+        .then((response) => res.json(response))
         .catch(next);}
 
 function getFaqs(req, res, next) {
-    faqsServices.getFaqs(req.body.category_id)
-        .then((message) => res.json({message : message}))
+    faqsServices.getFaqs(req.params.category_id)
+        .then((response) => res.json(response))
         .catch(next);}
 
 function update(req, res, next) {
     faqsServices.update(req.body)
-        .then(faq => res.json(faq))
-        .catch(next);
+    .then((message) => res.json({message : message}))
+    .catch(next);
 }
 
 function _delete(req, res, next) {
     faqsServices.delete(req.params.id)
-        .then(() => res.json({ message: 'FAQ deleted successfully' }))
+        .then((message) => res.json({ message: message }))
         .catch(next);
 }
 
 /// Not working properly
 function deleteCategoryFaqs(req, res, next) {
-    faqsServices.delete(req.params.category_id)
-        .then(() => res.json({ message: 'FAQs deleted successfully' }))
+    faqsServices.deleteCategoryFaqs(req.params)
+        .then((message) => res.json({ message: message }))
         .catch(next);
 }

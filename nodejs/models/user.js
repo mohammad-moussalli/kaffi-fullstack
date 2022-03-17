@@ -17,15 +17,17 @@ module.exports = (sequelize, DataTypes) => {
     
     user_type_id: DataTypes.INTEGER,
     university_id: DataTypes.INTEGER,
-    location_id: DataTypes.INTEGER,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     dob: DataTypes.DATEONLY,
+    country_code: DataTypes.STRING,
     mobile_phone: DataTypes.STRING,
-    sex: DataTypes.BOOLEAN,
-    verification_document: DataTypes.STRING,
+    sex: DataTypes.STRING,
+    country: DataTypes.STRING,
+    city: DataTypes.STRING,
+    nationality: DataTypes.STRING,
     profile_picture: DataTypes.STRING
   }, {
     sequelize,

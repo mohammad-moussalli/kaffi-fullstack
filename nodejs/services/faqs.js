@@ -1,4 +1,3 @@
-const { param } = require('../app');
 const model = require('../models')
 
 module.exports = {
@@ -12,6 +11,9 @@ module.exports = {
 
 async function create(params) {
     // validate
+    if(!await model.Faq_Category.findByPk(params.category_id)){
+        return "FAQ Category doens't exist";
+    }
     if (await model.Faq.findOne({ where: { category_id: params.category_id, question: params.question } })) {
         return "Faq already exists"
     }
@@ -26,7 +28,7 @@ async function create(params) {
 async function getFaqs(category_id) {
     const faqs = await model.Faq.findAll({where: {category_id: category_id}});
     if (Object.keys(faqs).length === 0){
-        return 'Category is not found';
+        return {message: 'Category is not found'};
     }
     return faqs;
 }
@@ -34,17 +36,16 @@ async function getFaqs(category_id) {
 async function getFaq(id) {
     const faq = await model.Faq.findByPk(id);
     if (!faq){
-        return 'FAQ not found';
+        return {message: 'FAQ not found'};
     }
     return faq;
 }
 
 async function update(params) {
     const faq = await getFaq(params.id);
-
     // validate
     const faqChanged = faq.category_id !== params.category_id || faq.question !== params.question || faq.answer !== params.answer;
-    if (faqChanged && await model.Faq.findByPk(faq.id)) {
+    if (faqChanged && await model.Faq.findOne({ where: { question: params.question, category_id:params.category_id } })) {
         return 'FAQ already exists';
     }
 
@@ -54,27 +55,27 @@ async function update(params) {
         { where: { id: params.id } },	 
       )
     
-    await faq.save();
+    //await faq.save();
 
-    return faq.get();
+    return "Updated Successfuly";
 }
 
 async function _delete(id) {
     const faq = await getFaq(id);
-    if (Object.keys(faq).length === 0){
+    console.log(faq);
+    if (!faq.id){
         return 'Faq is not found';
     }
-    await model.Faq.destroy({
-        where:{id: id}
-    });
+    await faq.destroy();
+    return 'FAQ deleted successfully';
 }
 
 async function deleteCategoryFaqs(params) {
-    const faq = await getFaqs(params.category_id);
-    if (Object.keys(faq).length === 0){
-        return 'Category is not found';
+    if(!await model.Faq_Category.findByPk(params.category_id)){
+        return "FAQ Category doens't exist";
     }
     await model.Faq.destroy({
         where:{category_id: params.category_id}
     });
+    return  'FAQs deleted successfully';
 }
